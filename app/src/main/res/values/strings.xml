@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RecyclerView</string>
+    <string name="titulo_card">Titulo</string>
+    <string name="descricao_card">Descrição</string>
+    <string name="add">Adicionar</string>
+    <string name="delete">Deletar</string>
+</resources>
