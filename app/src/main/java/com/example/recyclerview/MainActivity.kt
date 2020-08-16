@@ -1,80 +1,53 @@
 package com.example.recyclerview
 
+import android.content.Intent
+import android.icu.text.Transliterator
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recyclerview.adapters.ListaAdapter
-import com.example.recyclerview.adapters.ListaAdapterListener
-import com.example.recyclerview.model.Lista
+import com.example.recyclerview.adapters.ItemAdapter
+import com.example.recyclerview.adapters.ItemAdapterListener
+import com.example.recyclerview.model.Item
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_list.*
+import kotlinx.android.synthetic.main.item_list_add_show.*
 
 
-class MainActivity : AppCompatActivity(), ListaAdapterListener {
-    private lateinit var adapter: ListaAdapter
-    private var positionSelected: Int = -1
+class MainActivity : AppCompatActivity(), ItemAdapterListener {
+    private lateinit var adapter: ItemAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = ListaAdapter(this)
+        adapter = ItemAdapter(this, applicationContext)
         listTarefas.adapter = adapter
         listTarefas.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        btADD.setOnClickListener{
-            val lista = Lista(
-                ptTitulo.text.toString(),
-                ptDescricao.text.toString()
-            )
-            if(ptTitulo.text.toString() != "" && ptDescricao.text.toString() != "") {
-                var position: Int = 0
 
-                if (this.positionSelected >= 0) {
-                    adapter.edit(lista, this.positionSelected)
-                    position = this.positionSelected
-                } else {
-                    position = adapter.add(lista)
-                }
-
-                (listTarefas.layoutManager as LinearLayoutManager).scrollToPosition(position)
-                clear()
-            }
+        btAdd.setOnClickListener{
+            adapter.novoCard()
         }
+    }
 
-        btRemove.setOnClickListener{
-            if(this.positionSelected >= 0){
-                adapter.remove(this.positionSelected)
-                (listTarefas.layoutManager as LinearLayoutManager).scrollToPosition(0)
-                clear()
-            }
+    override fun save(item: Item){
+        adapter.save(item)
+    }
+
+    override fun show(item: Item, position: Int) {
+        adapter.show(item, position)
+    }
+
+    override fun remove(item: Item, position: Int){
+        adapter.remove(item, position)
+    }
+
+    override fun share(item: Item) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, getString(R.string.compartilhar) +" "+ item.titulo)
+            type = "text/plain"
         }
-
-
-    }
-
-    private fun clear(){
-        ptTitulo.text = null
-        ptDescricao.text = null
-        this.positionSelected = -1
-        btRemove.isClickable = false
-    }
-
-    override fun onListaSelected(lista: Lista, position: Int) {
-        ptTitulo.setText(lista.titulo)
-        ptDescricao.setText(lista.descricao)
-
-        this.positionSelected = position
-        btRemove.isClickable = true
-    }
-
-    override fun onLongListaPress(lista: Lista, position: Int){
-        lista.titulo = "[FEITO]"+lista.titulo
-        lista.descricao
-
-        adapter.edit(lista, position)
-
-        (listTarefas.layoutManager as LinearLayoutManager).scrollToPosition(position)
+        startActivity(Intent.createChooser(sendIntent, null))
     }
 
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RecyclerView</string>
+    <string name="titulo_card">Título</string>
+    <string name="descricao_card">Descripción</string>
+    <string name="add">Agregar tarea</string>
+    <string name="delete">Eliminar</string>
+    <string name="compartilhar">¡Oye! Acabo de terminar: </string>>
+</resources>
