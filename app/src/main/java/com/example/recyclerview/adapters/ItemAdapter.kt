@@ -169,14 +169,11 @@ class ItemAdapter(val listener: ItemAdapterListener, context: Context) :
 
             itemView.tfTitulo.text = null
             itemView.tfDescricao.text = null
-
+            itemView.btCancel.visibility = View.GONE
             if (!item.titulo.equals(null) && !item.descricao.equals(null)){
                 itemView.tfTitulo.setText(item.titulo)
                 itemView.tfDescricao.setText(item.descricao)
                 itemView.btCancel.visibility = View.VISIBLE
-            }
-            else{
-                itemView.btCancel.visibility = View.GONE
             }
 
             itemView.btSalvar.setOnClickListener {

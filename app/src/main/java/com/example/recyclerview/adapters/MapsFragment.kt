@@ -57,12 +57,7 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync { googleMap ->
             this.googleMap = googleMap
 
-            val ifpr = LatLng(-25.585339, -48.564752)
-
-            addMarker(ifpr, "Stiehl's Desk at IFPR")
-
             googleMap.uiSettings.isZoomControlsEnabled = true
-
             Dexter
                 .withContext(activity)
                 .withPermissions(
