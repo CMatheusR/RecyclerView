@@ -21,16 +21,13 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="4dp"
             android:ems="15"
             android:hint="@string/descricao_card"
             android:inputType="textMultiLine"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tfTitulo"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tfTitulo" />
 
         <EditText
             android:id="@+id/tfTitulo"
@@ -57,6 +54,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:layout_marginBottom="4dp"
+            android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@+id/tfDescricao"
             app:layout_constraintEnd_toStartOf="@+id/btSalvar"
             app:layout_constraintHorizontal_bias="1.0"
@@ -78,6 +76,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_salve" />
+
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="com.example.recyclerview.adapters.MapsFragment"
+            android:layout_width="0dp"
+            android:layout_height="350dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tfDescricao" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

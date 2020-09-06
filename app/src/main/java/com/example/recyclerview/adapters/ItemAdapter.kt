@@ -25,7 +25,7 @@ class ItemAdapter(val listener: ItemAdapterListener, context: Context) :
     private val SHOW: Int = 1
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.0.112:3000/")
+        .baseUrl("http://192.168.254.6:3000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -87,7 +87,7 @@ class ItemAdapter(val listener: ItemAdapterListener, context: Context) :
         }
     }
 
-    fun remove(item: Item, position: Int) {
+    fun remove(item: Item) {
 
         service.delete(item.id!!).enqueue(object : Callback<Void> {
             override fun onFailure(call: Call<Void>, t: Throwable) { /* ... */ }
@@ -101,7 +101,7 @@ class ItemAdapter(val listener: ItemAdapterListener, context: Context) :
     }
 
     fun novoCard(): Int {
-        val item = Item("", "", false, 1)
+        val item = Item("", "", false, 1, 0.0, 0.0)
         val position = 0
         tarefas.add(position, item)
         notifyItemInserted(position)
@@ -125,8 +125,6 @@ class ItemAdapter(val listener: ItemAdapterListener, context: Context) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         var view: View?
         var viewHolder: RecyclerView.ViewHolder
-
-        Log.d("teste", "viewType = " + viewType)
 
         return if (viewType == CADASTRO) {
             view = LayoutInflater
@@ -175,9 +173,11 @@ class ItemAdapter(val listener: ItemAdapterListener, context: Context) :
             if (!item.titulo.equals(null) && !item.descricao.equals(null)){
                 itemView.tfTitulo.setText(item.titulo)
                 itemView.tfDescricao.setText(item.descricao)
+                itemView.btCancel.visibility = View.VISIBLE
             }
-
-            if(i)
+            else{
+                itemView.btCancel.visibility = View.GONE
+            }
 
             itemView.btSalvar.setOnClickListener {
                 item.titulo = itemView.tfTitulo.text.toString()
